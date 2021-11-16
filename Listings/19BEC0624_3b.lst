@@ -1,0 +1,63 @@
+A51 MACRO ASSEMBLER  19BEC0624_3B                                                         09/28/2021 19:17:15 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\19BEC0624_3b.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 19BEC0624_3b.ASM SET(SMALL) DEBUG PRINT(.\Listings\19BEC0624_3b.lst) OB
+                      JECT(.\Objects\19BEC0624_3b.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;Write a 8051 Assembly level program using timer 0 mode 1 to generate a 500Hz square wave f
+                             requency on one of the pins of P1. Then examine the
+                       2     ;frequency using the oscilloscope in the keil simulator.
+                       3     ;Repeat 1 and 2 for the multiplication of your reg.no. digits excluding 0 with class serial
+                              no. micro hz frequency. Eg.  19BEC0624=9*9*11*14*12*6*2*4 =   
+                       4     ;798336 micro Hz= 1.252ms
+                       5     ;TL0,#0BEH TH0,#0FDH
+                       6     ;label  mnemonics       Operands                comments                                   
+                                          
+0000                   7                     ORG                     0000H   
+0000 758901            8                     MOV                     TMOD,#01H               ;initialise timer 0 into mo
+                             de 1
+0003 758A33            9     HERE:   MOV                     TL0,#033H               ;load lower bits into TL0
+0006 758CFE           10                     MOV                     TH0,#0FEH               ;timer 0=FC66H=64614
+0009 B290             11                     CPL                     P1.0                    ;alternating value of p1.0 
+                             for square wave
+000B 110F             12                     ACALL           DELAY                   ;call delay subroutine
+000D 80F4             13                     SJMP            HERE                    ;repeat infintely
+000F D28C             14     DELAY:  SETB            TR0                             ;start timer 0
+0011 308DFD           15     AGAIN:  JNB                     TF0,AGAIN               ;check for overflow into TF0
+0014 C28C             16                     CLR                     TR0                             ;clear TR0
+0016 C28D             17                     CLR                     TF0                             ;clear TF0 so timer
+                              can be re used
+0018 22               18                     RET                                                     ;return to calling 
+                             line
+                      19                     END                                                     ;end of ALP
+                                                     
+                                                     
+                                             
+                             
+A51 MACRO ASSEMBLER  19BEC0624_3B                                                         09/28/2021 19:17:15 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AGAIN. . . . . . .  C ADDR   0011H   A   
+DELAY. . . . . . .  C ADDR   000FH   A   
+HERE . . . . . . .  C ADDR   0003H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+TF0. . . . . . . .  B ADDR   0088H.5 A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

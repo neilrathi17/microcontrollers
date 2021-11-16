@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\tacho.obj" 
+TO ".\Objects\PIR-project" 
+PRINT(".\Listings\PIR-project.m51")

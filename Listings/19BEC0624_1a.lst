@@ -1,0 +1,105 @@
+A51 MACRO ASSEMBLER  19BEC0624_1A                                                         08/30/2021 20:23:41 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\19BEC0624_1a.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 19BEC0624_1a.a51 SET(SMALL) DEBUG PRINT(.\Listings\19BEC0624_1a.lst) OB
+                      JECT(.\Objects\19BEC0624_1a.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;Write and assemble an 8051 Assembly level program to add the following data and then use t
+                             he simulator to examine the CY flag. 
+                       2     ;INPUT DATA  REG NO:  Example     01 9B EC 06 24.    Five max 8BIT NUMBERS (FF ,FF,FF,FF,FF)
+                       3     ;label  mnemonics       Operands        comments                adressing mode          mac
+                             hine cycle required          memory byte required            type of instruction
+                       4     
+0000                   5                     org                     0000h
+0000 74FF              6                     MOV                     A,#0FFH         ;loading first number into acc     
+                                  immediate 1                                             2                             
+                                               Data transfer
+0002 75F0FF            7                     MOV                     B,#0FFH         ;loading second number into B      
+                                          immediate 1                                             2                     
+                                                       Data transfer
+0005 25F0              8                     ADD                     A,B                     ;adding A<- A+B=9C         
+                                                                  direct    1                                           
+                               2                                               Arithmetic
+0007 5001              9                     JNC                     L1                      ;jump if carry is produced 
+                                          -                 2                                             2             
+                                                               Boolean
+0009 08               10                     INC                     R0                      ;icrement R0 for carry coun
+                             t                    -                 1                                             1     
+                                                                       Arithmetic      
+000A F5F0             11     L1:             MOV                     B,A                     ;b<- A =9C                 
+                                                                          direct    1                                   
+                                       2                                               Data Transfer
+000C 74FF             12                     MOV                     A,#0FFH         ;load third number into A          
+                                                  immediate 1                                             2             
+                                                               Data transfer
+000E 25F0             13                     ADD                     A,B                     ;adding A<-A+B = EC + 9C =1
+                             88                   direct    1                                             2             
+                                                               Arithmetic      
+0010 5001             14                     JNC                     L2                      ;jump if carry is produced 
+                                                          -                 2                                           
+                               2                                               Boolean 
+0012 08               15                     INC                     R0                      ;increment for carry count 
+                                                          -                 1                                           
+                               1                                               Arithmetic
+0013 F5F0             16     L2:             MOV                     B,A                     ;B<-A=88                   
+                                                                          direct    1                                   
+                                       2                                               Data transfer
+0015 74FF             17                     MOV                     A,#0FFH         ;load 4th number into A            
+                                                  immediate 1                                             2             
+                                                               Data transfer
+0017 25F0             18                     ADD                     A,B                     ;A-<A+B=88H+06H=8E         
+                                                                  direct    2                                           
+                               2                                               Arithmetic      
+0019 5001             19                     JNC                     L3                      ;jump if carry is produced 
+                                                          -                 2                                           
+                               2                                               Boolean
+001B 08               20                     INC                     R0                      ;increment R0 for carry cou
+                             nt                   -                 1                                             1     
+                                                                       Arithmetic
+001C F5F0             21     L3:             MOV                     B,A                     ;B<-A=8E                   
+                                                                          direct    1                                   
+                                       2                                               Data transfer
+001E 74FF             22                     MOV                     A,#0FFH         ;loading 5th number      into A    
+                                                  immediate 1                                             2             
+A51 MACRO ASSEMBLER  19BEC0624_1A                                                         08/30/2021 20:23:41 PAGE     2
+
+                                                               Data transfer           
+0020 25F0             23                     ADD                     A,B                     ;A<-A+B=8EH+24H=B2         
+                                                                  direct    1                                           
+                               2                                               Arithmetic
+0022 5001             24                     JNC                     L4                      ;jump if carry is produced 
+                                                          -                 2                                           
+                               2                                               Boolean
+0024 08               25                     INC                     R0                      ;increment R0 for carry cou
+                             nt                   -                 1                                             1     
+                                                                       Arithmetic
+0025                  26     L4:             
+0025 80FE             27     HERE:   SJMP            HERE            ;                                                  
+                                                                            2                                     2     
+                                                                               Program branching
+                      28                     END
+                                             
+A51 MACRO ASSEMBLER  19BEC0624_1A                                                         08/30/2021 20:23:41 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+HERE . . . . . . .  C ADDR   0025H   A   
+L1 . . . . . . . .  C ADDR   000AH   A   
+L2 . . . . . . . .  C ADDR   0013H   A   
+L3 . . . . . . . .  C ADDR   001CH   A   
+L4 . . . . . . . .  C ADDR   0025H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

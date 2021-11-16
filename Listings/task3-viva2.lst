@@ -1,0 +1,53 @@
+A51 MACRO ASSEMBLER  TASK3_VIVA2                                                          09/29/2021 11:53:24 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\task3-viva2.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE task3-viva2.ASM SET(SMALL) DEBUG PRINT(.\Listings\task3-viva2.lst) OBJE
+                      CT(.\Objects\task3-viva2.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ; Develop an 8051 ALP with comments which checks the contents of 20H. If it is a negative n
+                             umber, then find its two’s complement value and store it in the
+                       2     ;same location.             
+                       3     ;label  mnemonics       Operands        comments                                           
+                                  adressing mode          machine cycle           memory byte             type of instruction
+                       4     
+0000                   5                     ORG                     0000H           ;assembler directive
+0000 7400              6                     MOV                     A,#00H          ;clear accumulator
+0002 900020            7                     MOV             DPTR,#20H               ;setting destination pointer
+0005 7920              8                     MOV                     R1,#20H
+0007 93                9                     MOVC            A,@A+DPTR               ;loading value from memory into A
+0008 C3               10                     CLR                     C                       ;clear carry flag
+0009 FA               11                     MOV             R2,A            ;store temp value
+000A 33               12                     RLC                     A                       ;rotate left content of A
+000B 5005             13                     JNC                     POSTIVE         ;jump if carry=1
+000D EA               14                     MOV                     A,R2                    ;oad original value into A
+000E F4               15                     CPL                     A                       ;find complement of A if ne
+                             gative
+000F 2401             16                     ADD                     A,#01           ;add one to find 2's complement
+0011 F7               17                     MOV                     @R1,A           ;move result to destination
+0012 00               18     POSTIVE:NOP                                             ;no operation
+0013 80FE             19     HERE:   SJMP            HERE            ;end
+                      20                     
+                      21     
+0020                  22                     ORG                     20H
+0020 FC               23                     DB                      0FCH
+                      24                     END
+A51 MACRO ASSEMBLER  TASK3_VIVA2                                                          09/29/2021 11:53:24 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   0013H   A   
+POSTIVE. . . . . .  C ADDR   0012H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

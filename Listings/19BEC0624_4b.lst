@@ -1,0 +1,55 @@
+A51 MACRO ASSEMBLER  19BEC0624_4B                                                         10/07/2021 21:28:08 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\19BEC0624_4b.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 19BEC0624_4b.ASM SET(SMALL) DEBUG PRINT(.\Listings\19BEC0624_4b.lst) OB
+                      JECT(.\Objects\19BEC0624_4b.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;Write a 8051 Assembly Language program to get your class serial number lab/theory ) data f
+                             rom the PC and display the sum of both on P1.  
+                       2     
+                       3     ;label  mnemonics       Operands                comments                        
+                       4     
+0000                   5                     ORG                     0000H                   ;assembler directive
+0000 758920            6                     MOV                     TMOD,#20H               ;timer 1 mode 2
+0003 758DFA            7                     MOV                     TH1,#-6                 ;set baud rate=4800
+0006 759000            8                     MOV                     P1,#00H
+0009 759850            9                     MOV                     SCON,#50H               ;set TCON
+000C D28E             10                     SETB            TR1                             ;start timer 1
+000E 3098FD           11     HERE:   JNB                     RI,HERE                 ;check for buffer input
+0011 E599             12                     MOV                     A,SBUF                  ;move lab sl number from Se
+                             rial buffer to A
+0013 F9               13                     MOV                     R1,A                    ;store temp value of A in R1
+0014 F5A0             14                     MOV                     P2,A                    ;display sl number on p2
+0016 29               15                     ADD                     A,R1                    ; ADD sL numbers
+0017 F590             16                     MOV                     P1,A                    ;display sum on p1
+0019 C298             17                     CLR                     RI                              ;clear buffer for n
+                             ext input
+001B 80F1             18                     SJMP            HERE                    ;repeat 
+                      19                     END             
+A51 MACRO ASSEMBLER  19BEC0624_4B                                                         10/07/2021 21:28:08 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   000EH   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+RI . . . . . . . .  B ADDR   0098H.0 A   
+SBUF . . . . . . .  D ADDR   0099H   A   
+SCON . . . . . . .  D ADDR   0098H   A   
+TH1. . . . . . . .  D ADDR   008DH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR1. . . . . . . .  B ADDR   0088H.6 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\trial.obj" 
+TO ".\Objects\micro_task1_19BEC0624" 
+PRINT(".\Listings\micro_task1_19BEC0624.m51") RAMSIZE(256) 

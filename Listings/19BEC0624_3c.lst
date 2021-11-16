@@ -1,0 +1,56 @@
+A51 MACRO ASSEMBLER  19BEC0624_3C                                                         10/06/2021 20:21:19 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\19BEC0624_3c.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 19BEC0624_3c.ASM SET(SMALL) DEBUG PRINT(.\Listings\19BEC0624_3c.lst) OB
+                      JECT(.\Objects\19BEC0624_3c.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;Write and assemble a 8051 Assembly level program to toggle all the bits of P0, P1,P2 and P
+                             3 continuously by sending 55H and AAH to these ports. Put a time 
+                       2     ;delay 
+                       3     ;label  mnemonics       Operands                        comments                           
+                                                  
+0000                   4                     ORG             0000H                           ;assembler directive
+0000 758055            5     HERE:   MOV             P0,#55H                         ;send 1010101 to p0
+0003 759055            6                     MOV             P1,#55H                         ;send 1010101 to p1
+0006 75A055            7                     MOV             P2,#55H                         ;send 1010101 to p2
+0009 75B055            8                     MOV             P3,#55H                         ;send 1010101 to p3
+000C 111E              9                     ACALL           DELAY                           ;call delay subroutine
+000E 7580AA           10                     MOV             P0,#0AAH                        ;send 0101010 to p0
+0011 7590AA           11                     MOV             P1,#0AAH                        ;send 0101010 to p1
+0014 75A0AA           12                     MOV             P2,#0AAH                        ;send 0101010 to p2
+0017 75B0AA           13                     MOV             P3,#0AAH                        ;send 0101010 to p3
+001A 111E             14                     ACALL           DELAY                           ;call delay subroutine
+001C 80E2             15                     SJMP            HERE                            ;repeat infinetely 
+001E 7906             16     DELAY:  MOV             R1,#06H                         ; roll number =0624
+0020 7A24             17     BACK:   MOV             R2,#24H    
+0022 DAFE             18     AGAIN:  DJNZ            R2,AGAIN                        ;repeat inner loop
+0024 D9FA             19                     DJNZ            R1,BACK                         ;repeat outter loop
+0026 22               20                     RET                                                             ;return to 
+                             calling line
+                      21                     END
+A51 MACRO ASSEMBLER  19BEC0624_3C                                                         10/06/2021 20:21:19 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AGAIN. . . . . . .  C ADDR   0022H   A   
+BACK . . . . . . .  C ADDR   0020H   A   
+DELAY. . . . . . .  C ADDR   001EH   A   
+HERE . . . . . . .  C ADDR   0000H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+P3 . . . . . . . .  D ADDR   00B0H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

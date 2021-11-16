@@ -1,0 +1,78 @@
+A51 MACRO ASSEMBLER  19BEC0624_2A                                                         09/27/2021 01:16:23 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\19BEC0624_2A.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 19BEC0624_2A.ASM SET(SMALL) DEBUG PRINT(.\Listings\19BEC0624_2A.lst) OB
+                      JECT(.\Objects\19BEC0624_2A.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;1.    Write a 8051 Assembly level program to transfer a string of data from code space 
+                       2     ;starting at address 200H to RAM locations starting at 40H. The data is as shown below: 
+                       3                          ;0200H: DB    "L33L34 22 19BEC0624 VIT UNIVERSITY" 
+                       4     ;Using the simulator, single-step through the program and examine the data transfer and reg
+                             isters. 
+                       5     ;label  mnemonics       Operands        comments                          adressing mode   
+                                          machine cycle           memory byte             type of instruction
+0000                   6                     ORG                     000H
+0000 7400              7                     MOV                     A,#00H;         initialize acc=0               imme
+                             diate                                1                                       3             
+                                               data transfer
+0002 900200            8                     MOV                     DPTR,#0200H     ;dptr=200=source               imme
+                             diate                                1                                       3             
+                                               data transfer   
+0005 7922              9                     MOV                     R1,#22H     ;R1=22H=length of string   immediate   
+                                                          1                                       3                               data transfer
+0007 7840             10                     MOV                     R0,#40H     ;destination is 40H            immediat
+                             e                            1                                       3                               data trasnfer
+0009 E4               11     LOOP:   CLR             A                       ;clear acc                                 
+                                                                                  1                                     
+                               1                               boolean
+000A 93               12                     MOVC            A,@A+DPTR       ;movc to access memory code                
+                                                                  1                                       2             
+                                               data trasnfer
+000B F6               13                     MOV                     @R0,A           ;data moved to memort              
+                                                                          1                                       1     
+                                                       data transfer
+000C A3               14                     INC                     DPTR            ;increase memory location          
+                                                                          1                                       1     
+                                                       arithmetic
+000D 08               15                     INC                     R0                      ;increase location poiner  
+                                                                                  1                                     
+                               1                               arithmetic
+000E D9F9             16                     DJNZ            R1,LOOP         ;cont decreased,loop again                 
+                                                                  2                                       2             
+                                               program branching
+0010 80FE             17     HERE:   SJMP            HERE        ; ALP completed                                        
+                                                                                                                        
+                                               program branching
+                      18     ;------------------------------------------------------------------------------------------
+                             ---------------------------------------
+0200                  19                     ORG                     0200H
+0200 4C33334C         20                     DB                      "L33L34 22 19BEC0624 VIT UNIVERSITY"
+0204 33342032                
+0208 32203139                
+020C 42454330                
+0210 36323420                
+0214 56495420                
+0218 554E4956                
+021C 45525349                
+0220 5459                    
+                      21                     END
+A51 MACRO ASSEMBLER  19BEC0624_2A                                                         09/27/2021 01:16:23 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   0010H   A   
+LOOP . . . . . . .  C ADDR   0009H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

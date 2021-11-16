@@ -1,0 +1,31 @@
+A51 MACRO ASSEMBLER  ADD19BEC0624TASK1                                                    08/22/2021 12:17:48 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\ADD19BEC0624TASK1.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE ADD19BEC0624TASK1.a51 SET(SMALL) DEBUG PRINT(.\Listings\ADD19BEC0624TAS
+                      K1.lst) OBJECT(.\Objects\ADD19BEC0624TASK1.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 0000H
+0000 74FF              2     MOV A,#0FFH; FFH-(1111 1111)2
+0002 78FF              3     MOV R0,#0FFH; FFH-(1111 1111)2
+0004 28                4     ADD A,R0
+0005 80FE              5     HERE:SJMP HERE
+                       6     END
+A51 MACRO ASSEMBLER  ADD19BEC0624TASK1                                                    08/22/2021 12:17:48 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   0005H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

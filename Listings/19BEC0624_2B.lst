@@ -1,0 +1,102 @@
+A51 MACRO ASSEMBLER  19BEC0624_2B                                                         08/30/2021 17:59:15 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\19BEC0624_2B.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 19BEC0624_2B.ASM SET(SMALL) DEBUG PRINT(.\Listings\19BEC0624_2B.lst) OB
+                      JECT(.\Objects\19BEC0624_2B.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;Add  the  following  subroutine  to  the  8051  Assembly  level  program  1,    single-ste
+                             p through the subroutine and examine the RAM locations.
+                       2     ;After data has been transferred from ROM space into RAM, the subroutine should copy the da
+                             ta from RAM locations starting  at 40H to RAM locations starting at 60H.
+                       3                     ;label  mnemonics       Operands        comments                          a
+                             dressing mode                machine cycle           memory byte             type of instruction
+0000                   4                                     ORG                     000H
+0000 7400              5                                     MOV                     A,#00H;         initialize acc=0   
+                                         immediate                                1                                     
+                               3                               data transfer
+0002 900200            6                                     MOV                     DPTR,#0200H     ;dptr=200=source   
+                                         immediate                                1                                     
+                               3                               data transfer   
+0005 7822              7                                     MOV                     R0,#22H     ;R1=22H=length of strin
+                             g   immediate                                1                                       3     
+                                                       data transfer
+0007 7940              8                                     MOV                     R1,#40H     ;destination is 40H    
+                                     immediate                            1                                       3     
+                                                       data trasnfer
+0009 E4                9                     LOOP:   CLR             A                       ;clear acc                 
+                                                                                                  1                     
+                                               1                               boolean
+000A 93               10                                     MOVC            A,@A+DPTR       ;movc to access memory code
+                                  index                                   1                                       2     
+                                                       data trasnfer
+000B F7               11                                     MOV                     @R1,A           ;data moved to memo
+                             rt           direct                                  1                                     
+                               1                               data transfer
+000C A3               12                                     INC                     DPTR            ;increase memory lo
+                             cation                                                       1                             
+                                       1                               arithmetic
+000D 09               13                                     INC                     R1                      ;increase l
+                             ocation poiner                                                       1                     
+                                               1                               arithmetic
+000E D8F9             14                                     DJNZ            R0,LOOP         ;cont decreased,loop again 
+                                                                                  2                                     
+                               2                               program branching
+                      15                     ;--------------------------------------------------------------------------
+                             --------------------
+0010 7840             16                                     MOV             R0,#40H    ;source pointer set             
+                                  immediate                               1                                       3     
+                                                       data transfer
+0012 7960             17                                     MOV         R1,#60H        ;destination pointer set        
+                                  immediate                               1                                       3     
+                                                       data transfer
+0014 7B22             18                                     MOV                     R3,#22H     ;length for string     
+                                          immediate                               1                                     
+                               3                               data transfer
+0016 E6               19                     LOOP2:  MOV                     A,@R0           ;load from source to ACC
+0017 F7               20                                     MOV             @R1,A           ;load from ACC to destinati
+                             on direct
+0018 09               21                                     INC                     R1                      ;increase d
+                             estination pointer                                           1                             
+                                       1                               arithmetic
+0019 08               22                                     INC                     R0                      ;increase s
+                             ource pointer                                                        1                     
+                                               1                               arithmetic
+A51 MACRO ASSEMBLER  19BEC0624_2B                                                         08/30/2021 17:59:15 PAGE     2
+
+001A DBFA             23                                     DJNZ            R3,LOOP2    ;decrement count and begin loop
+                                                                          2                                       2     
+                                                       program branch
+001C 80FE             24                                     HERE:   SJMP            HERE            ;ALP Ended
+                      25                     ;--------------------------------------------------------------------------
+                             --------------------
+0200                  26                                     ORG                     0200H
+0200 4C33334C         27                                     DB                      "L33L34 22 19BEC0624 Neil Rathi"
+0204 33342032                
+0208 32203139                
+020C 42454330                
+0210 36323420                
+0214 4E65696C                
+0218 20526174                
+021C 6869                    
+                      28                                     END
+A51 MACRO ASSEMBLER  19BEC0624_2B                                                         08/30/2021 17:59:15 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   001CH   A   
+LOOP . . . . . . .  C ADDR   0009H   A   
+LOOP2. . . . . . .  C ADDR   0016H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

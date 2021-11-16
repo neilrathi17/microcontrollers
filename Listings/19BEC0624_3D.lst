@@ -1,0 +1,44 @@
+A51 MACRO ASSEMBLER  19BEC0624_3D                                                         09/28/2021 19:37:46 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\19BEC0624_3D.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 19BEC0624_3D.ASM SET(SMALL) DEBUG PRINT(.\Listings\19BEC0624_3D.lst) OB
+                      JECT(.\Objects\19BEC0624_3D.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;Write and assemble a 8051 Assembly level program to Get the Data(your sl.no.) From Port P1
+                              and swap and  Send it to Port P2.
+                       2     ;then swap and send it to p4 again
+                       3     ;Note:P1 as input Port and P2 as Output Port.
+                       4     
+                       5     ;label  mnemonics       Operands        comments                          adressing mode   
+                                          machine cycle           memory byte             type of instruction
+                       6     
+0000                   7                     ORG             0H
+0000 74FF              8                     MOV             A,#0FFh     ;A=FFH
+0002 F590              9                     MOV             P1,A       ;make P1 an input port
+0004 E590             10     HERE:   MOV             A,P1       ;get data from P1
+0006 C4               11             SWAP            A
+0007 F5A0             12                     MOV             P2,A       ;send it to P2
+                      13                     
+0009 80F9             14                     SJMP            HERE       ;keep doing this
+                      15                     END
+A51 MACRO ASSEMBLER  19BEC0624_3D                                                         09/28/2021 19:37:46 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   0004H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

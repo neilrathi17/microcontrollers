@@ -1,0 +1,76 @@
+A51 MACRO ASSEMBLER  19BEC0624_3E                                                         09/28/2021 22:13:24 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\19BEC0624_3E.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 19BEC0624_3E.ASM SET(SMALL) DEBUG PRINT(.\Listings\19BEC0624_3E.lst) OB
+                      JECT(.\Objects\19BEC0624_3E.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;Write a program to get a byte of hex data from P1, convert it to decimal, and then to ASCI
+                             I. For example, if P1 has FBH, which is equal to 251 in decimal, 
+                       2     ;after conversion we will have 32H, 35H, and 31H. Place the ASCII result in RAM locations s
+                             tarting at 40H. 
+                       3     ;Using a simulator, single-step the program and examine the data.
+                       4     
+                       5     ;label  mnemonics       Operands        comments                          adressing mode   
+                                          machine cycle           memory byte             type of instruction
+                       6     
+                       7                                                             
+0000                   8                     ORG                     0000H                                   
+0000 7590EC            9                     MOV                     P1,#0ECH        ;move value to port 1           dir
+                             ect                                  1                                       2             
+                                                       data transfer
+0003 7840             10                     MOV                     R0,#40H         ;set pointer                       
+                                  direct                                  1                                       2     
+                                                               data transfer
+0005 E590             11                     MOV                     A,P1            ;move data to accumulator       dir
+                             ect                                  1                                       2             
+                                                       data transfer
+0007 75F00A           12     LOOP:   MOV                     B,#10           ;store 10 in B                          dir
+                             ect                                  1                                       2             
+                                                       data transfer
+000A 84               13                     DIV                     AB                      ;divide A and B to extract 
+                             digit                                        4                                       1     
+                                                               arithmetic
+000B C5F0             14                     XCH                     A,B                     ;swap                      
+                                                                                                  1                     
+                                               1                                       boolean
+000D 2430             15                     ADD                     A,#30H          ;convert to ascii                  
+                                  direct                                  1                                       2     
+                                                               arithmetic
+000F F6               16                     MOV                     @R0,A           ;move ascii to RAM location     reg
+                             ister direct                 1                                       2                     
+                                               data transfer
+0010 C5F0             17                     XCH                     A,B                     ;swap                      
+                                                                                                  1                     
+                                               1                                       boolean
+0012 08               18                     INC                     R0                      ;increase pointer          
+                                                                                          1                             
+                                       1                                       arithmetic
+0013 70F2             19                     JNZ                     LOOP            ;repeat                            
+                                                                                          2                             
+                                       2                                       program branching
+0015 80FE             20     HERE:   SJMP            HERE            ;alp ended                                         
+                                                                          2                                       2     
+                                                               program branching
+                      21                     END                                             
+A51 MACRO ASSEMBLER  19BEC0624_3E                                                         09/28/2021 22:13:24 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+HERE . . . . . . .  C ADDR   0015H   A   
+LOOP . . . . . . .  C ADDR   0007H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

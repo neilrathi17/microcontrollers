@@ -1,0 +1,79 @@
+A51 MACRO ASSEMBLER  19BEC0624_1D                                                         08/23/2021 00:51:59 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\19BEC0624_1d.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 19BEC0624_1d.ASM SET(SMALL) DEBUG PRINT(.\Listings\19BEC0624_1d.lst) OB
+                      JECT(.\Objects\19BEC0624_1d.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;4  Write and assemble a 8051 Assembly level program to load values into each of registers 
+                             R0 - R4 and then push each of these registers onto 
+                       2     ;the stack and pop them back.  Single-step the program, and examine the stack  and the SP r
+                             egister after the execution of each instruction.
+                       3     ;label  mnemonics       Operands        comments                        adressing mode     
+                                  machine cycle memory Byte       type of instruction             Flags affected
+                       4     
+0000                   5                             ORG     0000H           ;Assembler Directive to indicate  begining 
+                             of the program
+                       6                                     
+0000 7801              7                             MOV         R0, #01H    ;Move data to register Immediate           
+                                          1                       3                               Data Transfer           no flags affected
+0002 799B              8                             MOV     R1, #9BH        ;Move data to register Immediate           
+                                          1                       3                               Data Transfer           no flags affected
+0004 7AEC              9                             MOV         R2, #0ECH   ;Move data to register Immediate           
+                                          1                       3                               Data Transfer           no flags affected
+0006 7B06             10                             MOV     R3, #06H        ;Move data to register Immediate           
+                                          1                       3                               Data Transfer           no flags affected
+0008 7C24             11                             MOV     R4, #24H        ;Move data to register Immediate           
+                                          1                       3                               Data Transfer           no flags affected
+000A C000             12                             PUSH    0                       ;push to R0                        
+                                                                          2                       2                     
+                                       data transfer           no flags affected
+000C C001             13                             PUSH    1                       ;push to R1                        
+                                                                          2                       2                     
+                                       data transfer           no flags affected
+000E C002             14                             PUSH    2                       ;pop to R2                         
+                                                                          2                       2                     
+                                       data transfer           no flags affected
+0010 C003             15                             PUSH    3                       ;pop to R3                         
+                                                                          2                       2                     
+                                       data transfer           no flags affected
+0012 C004             16                             PUSH    4                       ;pop t0 R4                         
+                                                                          2                       2                     
+                                       data transfer           no flags affected
+0014 D000             17                             POP             0                       ;pop from R0               
+                                                                          2                       2                     
+                                       data transfer           no flags affected
+0016 D001             18                             POP             1                       ;pop from R1               
+                                                                          2                       2                     
+                                       data transfer           no flags affected
+0018 D002             19                             POP             2                       ;pop from R2               
+                                                                          2                       2                     
+                                       data transfer           no flags affected
+001A D003             20                             POP             3                       ;pop from R3               
+                                                                          2                       2                     
+                                       data transfer           no flags affected
+001C D004             21                             POP             4                       ;pop from R4               
+                                                                          2                       2                     
+                                       data transfer           no flags affected
+001E 80FE             22     HERE:           SJMP    HERE            ;ALP ENDED                                         
+                                                                                                                  progra
+                             m branching       no flags affected
+                      23                             END
+A51 MACRO ASSEMBLER  19BEC0624_1D                                                         08/23/2021 00:51:59 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   001EH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

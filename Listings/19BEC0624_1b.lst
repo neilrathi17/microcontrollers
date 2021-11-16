@@ -1,0 +1,68 @@
+A51 MACRO ASSEMBLER  19BEC0624_1B                                                         08/22/2021 23:38:57 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\19BEC0624_1b.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 19BEC0624_1b.a51 SET(SMALL) DEBUG PRINT(.\Listings\19BEC0624_1b.lst) OB
+                      JECT(.\Objects\19BEC0624_1b.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;Write and assemble an 8051 Assembly level program to load values into each of registers R0
+                              - R4 and then push each of these registers onto the stack. 
+                       2     ;Single-step the program, and examine the stack and the SP register after the execution of 
+                             each instruction.
+                       3     ;label  mnemonics       Operands     comments                           adressing mode     
+                                  machine cycle required          memory byte required            type of instruction
+                       4     
+0000                   5                     ORG                     0000H                                              
+                                                                                                  
+0000 7801              6                     MOV             R0,#01H         ;loading value into R0          immediate  
+                                                          1                                               3             
+                                                               Data transfer   
+0002 799B              7                     MOV             R1,#9BH         ;loading value into R1          immediate  
+                                                          1                                               3             
+                                                               Data transfer
+0004 7AEC              8                     MOV             R2,#0ECH        ;loading value into R2          immediate  
+                                                          1                                               3             
+                                                               Data transfer                                   
+0006 7B06              9                     MOV             R3,#06H         ;loading value into R3          immediate  
+                                                          1                                               3             
+                                                               Data transfer                                                   
+0008 7C24             10                     MOV             R4,#24H         ;loading value into R4          immediate  
+                                                          1                                               3             
+                                                               Data transfer                                   
+000A C000             11                     PUSH            0                       ;push R0                           
+                                                                                          2                             
+                                               2                                               Data transfer
+000C C001             12                     PUSH            1                       ;push R1                           
+                                                                                          2                             
+                                               2                                               Data transfer
+000E C002             13                     PUSH            2                       ;push R2                           
+                                                                                          2                             
+                                               2                                               Data transfer
+0010 C003             14                     PUSH            3                       ;push R3                           
+                                                                                          2                             
+                                               2                                               Data transfer
+0012 C004             15                     PUSH            4                       ;push R4                           
+                                                                                          2                             
+                                               2                                               Data transfer
+0014 80FE             16     HERE:   SJMP      HERE               ;transfers execution                                  
+                                                      2                                           2                     
+                                                       Program branching
+                      17                     END  
+A51 MACRO ASSEMBLER  19BEC0624_1B                                                         08/22/2021 23:38:57 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+HERE . . . . . . .  C ADDR   0014H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

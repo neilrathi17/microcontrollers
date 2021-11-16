@@ -1,0 +1,106 @@
+A51 MACRO ASSEMBLER  19BEC0624_4A                                                         10/04/2021 21:26:36 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\19BEC0624_4a.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 19BEC0624_4a.ASM SET(SMALL) DEBUG PRINT(.\Listings\19BEC0624_4a.lst) OB
+                      JECT(.\Objects\19BEC0624_4a.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;Write an 8051 assembly level program to transfer your sl.no.,reg.no.,name as data serially
+                              at baud rate 9600 with 8 bit data, one stop bit and observe
+                       2     ;the transmitted data in the serial window of the simulator.
+                       3     
+                       4     ;label  mnemonics       Operands                comments                        
+0000                   5                     ORG                     0000H                   ;assembler directive
+0000 90001E            6             XX:     MOV                     DPTR,#MYDATA    ;initialise DPTR
+0003 758920            7                     MOV                     TMOD,#20H               ;Set timer to mode 2 
+0006 758DFA            8                     MOV                     TH1,#-6                 ;Set Baude rate=9600
+0009 759850            9                     MOV                     SCON,#50H       ;       Set serial port specifier
+000C D28E             10                     SETB            TR1                             ;Start Timer 1
+000E 7919             11                     MOV                     R1,#19H                 ;set loop counter
+0010 E4               12     AGAIN:  CLR                     A                               ;clear accumulator for next
+                              letter
+0011 93               13                     MOVC            A,@A+DPTR               ;move data from memory to A
+0012 F599             14                     MOV                     SBUF,A                  ;move data from A to serial
+                              buffer
+0014 3099FD           15     HERE:   JNB                     TI,HERE                 ;check for overflow
+0017 C299             16                     CLR                     TI                              ;reset serial buffer
+0019 A3               17                     INC                     DPTR                    ;increase DPTR for next val
+                             ue
+001A D9F4             18                     DJNZ            R1,AGAIN                ;repeat for next valye
+001C 80E2             19                     SJMP            XX                              ;repeat infintelely 
+001E 492C3232         20     MYDATA: DB "I,22,19BEC0624,NEIL RATHI ,will draw CWF ,interface diagrams ,and calculate del
+                             ay or count value for timer ,serial and interrupt programs in ECE3004 LAB and THEORY CAT and FAT Exam"
+0022 2C313942                
+0026 45433036                
+002A 32342C4E                
+002E 45494C20                
+0032 52415448                
+0036 49202C77                
+003A 696C6C20                
+003E 64726177                
+0042 20435746                
+0046 202C696E                
+004A 74657266                
+004E 61636520                
+0052 64696167                
+0056 72616D73                
+005A 202C616E                
+005E 64206361                
+0062 6C63756C                
+0066 61746520                
+006A 64656C61                
+006E 79206F72                
+0072 20636F75                
+0076 6E742076                
+007A 616C7565                
+007E 20666F72                
+0082 2074696D                
+0086 6572202C                
+008A 73657269                
+008E 616C2061                
+0092 6E642069                
+0096 6E746572                
+009A 72757074                
+009E 2070726F                
+A51 MACRO ASSEMBLER  19BEC0624_4A                                                         10/04/2021 21:26:36 PAGE     2
+
+00A2 6772616D                
+00A6 7320696E                
+00AA 20454345                
+00AE 33303034                
+00B2 204C4142                
+00B6 20616E64                
+00BA 20544845                
+00BE 4F525920                
+00C2 43415420                
+00C6 616E6420                
+00CA 46415420                
+00CE 4578616D                
+                      21     END  
+A51 MACRO ASSEMBLER  19BEC0624_4A                                                         10/04/2021 21:26:36 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+AGAIN. . . . . . .  C ADDR   0010H   A   
+HERE . . . . . . .  C ADDR   0014H   A   
+MYDATA . . . . . .  C ADDR   001EH   A   
+SBUF . . . . . . .  D ADDR   0099H   A   
+SCON . . . . . . .  D ADDR   0098H   A   
+TH1. . . . . . . .  D ADDR   008DH   A   
+TI . . . . . . . .  B ADDR   0098H.1 A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR1. . . . . . . .  B ADDR   0088H.6 A   
+XX . . . . . . . .  C ADDR   0000H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

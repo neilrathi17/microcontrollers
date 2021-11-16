@@ -1,0 +1,4 @@
+".\Objects\STARTUP.obj",
+".\Objects\tacho_lcd.obj" 
+TO ".\Objects\IRtach" 
+PRINT(".\Listings\IRtach.m51")

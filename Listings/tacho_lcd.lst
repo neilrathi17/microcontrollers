@@ -1,0 +1,248 @@
+A51 MACRO ASSEMBLER  TACHO_LCD                                                            11/10/2021 18:10:34 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\tacho_lcd.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE tacho_lcd.ASM SET(SMALL) DEBUG PRINT(.\Listings\tacho_lcd.lst) OBJECT(.
+                      \Objects\tacho_lcd.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+  00A7                 1         RS EQU P2.7
+  00A6                 2         RW EQU P2.6
+  00A5                 3         E  EQU P2.5
+0000                   4         ORG 00H
+0000 90011D            5     MOV DPTR,#LUT 
+0003 D2B5              6     SETB P3.5 
+0005 C2A0              7     CLR P2.0
+0007 7E16              8     MAIN: MOV R6,#22D
+0009 758961            9           MOV TMOD,#01100001B  
+000C 758B00           10           MOV TL1,#00000000B   
+000F 758D00           11           MOV TH1,#00000000B   
+0012 D28E             12           SETB TR1             
+0014 758C00           13     BACK: MOV TH0,#00000000B   
+0017 758A00           14           MOV TL0,#00000000B   
+001A D28C             15           SETB TR0             
+001C 308DFD           16     HERE: JNB TF0,HERE         
+001F C28C             17           CLR TR0              
+0021 C28D             18           CLR TF0              
+0023 DEEF             19           DJNZ R6,BACK
+0025 C28E             20           CLR TR1              
+0027 C28D             21           CLR TF0              
+0029 C28F             22           CLR TF1
+002B E58B             23           MOV A,TL1
+002D B44B00           24           CJNE A,#75D,SKIP 
+0030 4002             25     SKIP: JC SKIP1
+0032 D2A0             26           SETB P2.0
+0034 5002             27     SKIP1:JNC CONT
+0036 C2A0             28           CLR P2.0
+0038 C2D7             29     CONT: CLR PSW.7
+003A 75F064           30           MOV B,#100D    
+003D 84               31           DIV AB
+003E F8               32           MOV R0,A
+003F E5F0             33           MOV A,B
+0041 75F00A           34           MOV B,#10D
+0044 84               35           DIV AB
+0045 F9               36           MOV R1,A
+0046 AAF0             37           MOV R2,B
+                      38           
+0048 EA               39           MOV A,R2
+0049 75F004           40           MOV B,#4D
+004C A4               41           MUL AB
+004D 75F00A           42           MOV B,#10D
+0050 84               43           DIV AB
+0051 ACF0             44           MOV R4,B
+0053 FA               45           MOV R2,A
+0054 E9               46           MOV A,R1
+0055 75F004           47           MOV B,#4D
+0058 A4               48           MUL AB
+0059 2A               49           ADD A,R2
+005A 75F00A           50           MOV B,#10D
+005D 84               51           DIV AB
+005E ADF0             52           MOV R5,B
+0060 FA               53           MOV R2,A
+0061 E8               54           MOV A,R0
+0062 75F004           55           MOV B,#4D
+0065 A4               56           MUL AB
+0066 2A               57           ADD A,R2
+A51 MACRO ASSEMBLER  TACHO_LCD                                                            11/10/2021 18:10:34 PAGE     2
+
+0067 75F00A           58           MOV B,#10D
+006A 84               59           DIV AB
+006B AEF0             60           MOV R6,B
+006D FF               61           MOV R7,A
+                      62          
+                      63           
+006E 117B             64           ACALL DINT
+0070 1192             65           ACALL TEXT1
+0072 11CC             66           ACALL LINE2
+0074 11BB             67           ACALL TEXT2
+0076 11D1             68           ACALL NUM
+                      69           
+0078 020007           70           LJMP MAIN    
+                      71        
+                      72        
+                      73        
+007B 11EC             74      DINT: ACALL CMD 
+007D 740F             75         MOV A,#0FH 
+007F 11EC             76         ACALL CMD
+0081 7401             77         MOV A,#01H 
+0083 11EC             78         ACALL CMD
+0085 7406             79         MOV A,#06H 
+0087 11EC             80         ACALL CMD
+0089 7483             81         MOV A,#83H 
+008B 11EC             82         ACALL CMD
+008D 743C             83         MOV A,#3CH 
+008F 11EC             84         ACALL CMD
+0091 22               85         RET
+                      86         
+0092 7454             87     TEXT1: MOV A,#84D
+0094 11F9             88         ACALL DISPLAY
+0096 7441             89         MOV A,#65D 
+0098 11F9             90         ACALL DISPLAY
+009A 7443             91         MOV A,#67D
+009C 11F9             92         ACALL DISPLAY
+009E 7448             93         MOV A,#72D
+00A0 11F9             94         ACALL DISPLAY
+00A2 744F             95         MOV A,#79D
+00A4 11F9             96         ACALL DISPLAY
+00A6 744D             97         MOV A,#77D
+00A8 11F9             98         ACALL DISPLAY
+00AA 7445             99         MOV A,#69D
+00AC 11F9            100         ACALL DISPLAY
+00AE 7454            101         MOV A,#84D
+00B0 11F9            102         ACALL DISPLAY
+00B2 7445            103         MOV A,#69D
+00B4 11F9            104         ACALL DISPLAY
+00B6 7452            105         MOV A,#82D
+00B8 11F9            106         ACALL DISPLAY
+00BA 22              107         RET
+                     108     
+00BB 7452            109     TEXT2:MOV A,#82D
+00BD 11F9            110           ACALL DISPLAY
+00BF 7450            111           MOV A,#80D
+00C1 11F9            112           ACALL DISPLAY
+00C3 744D            113           MOV A,#77D
+00C5 11F9            114           ACALL DISPLAY
+00C7 7420            115           MOV A,#32D
+00C9 11F9            116           ACALL DISPLAY
+00CB 22              117           RET
+                     118         
+00CC 74C0            119     LINE2:MOV A,#0C0H 
+00CE 11EC            120         ACALL CMD
+00D0 22              121         RET
+                     122     
+                     123         
+A51 MACRO ASSEMBLER  TACHO_LCD                                                            11/10/2021 18:10:34 PAGE     3
+
+                     124        
+00D1 EF              125     NUM:MOV A,R7
+00D2 311B            126         ACALL ASCII
+00D4 11F9            127         ACALL DISPLAY
+00D6 EE              128         MOV A,R6
+00D7 311B            129         ACALL ASCII
+00D9 11F9            130         ACALL DISPLAY
+00DB ED              131         MOV A,R5
+00DC 311B            132         ACALL ASCII
+00DE 11F9            133         ACALL DISPLAY
+00E0 EC              134         MOV A,R4
+00E1 311B            135         ACALL ASCII
+00E3 11F9            136         ACALL DISPLAY
+00E5 7400            137         MOV A,#0D
+00E7 311B            138         ACALL ASCII
+00E9 11F9            139         ACALL DISPLAY
+00EB 22              140         RET
+                     141         
+                     142        
+                     143         
+00EC F580            144     CMD: MOV P0,A
+00EE C2A7            145         CLR RS
+00F0 C2A6            146         CLR RW
+00F2 D2A5            147         SETB E
+00F4 C2A5            148         CLR E
+00F6 3106            149         ACALL DELAY
+00F8 22              150         RET
+                     151     
+00F9 F580            152     DISPLAY:MOV P0,A
+00FB D2A7            153         SETB RS
+00FD C2A6            154         CLR RW
+00FF D2A5            155         SETB E
+0101 C2A5            156         CLR E
+0103 3106            157         ACALL DELAY
+0105 22              158         RET
+                     159     
+0106 C2A5            160     DELAY:CLR E
+0108 C2A7            161         CLR RS
+010A D2A6            162         SETB RW
+010C 7580FF          163         MOV P0,#0FFh
+010F D2A5            164         SETB E
+0111 E580            165         MOV A,P0
+0113 20E7F0          166         JB ACC.7,DELAY
+0116 C2A5            167         CLR E
+0118 C2A6            168         CLR RW
+011A 22              169         RET
+                     170     
+011B 93              171     ASCII: MOVC A,@A+DPTR
+011C 22              172            RET
+                     173         
+011D 30              174     LUT: DB  48D
+011E 31              175          DB  49D
+011F 32              176          DB  50D
+0120 33              177          DB  51D
+0121 34              178          DB  52D
+0122 35              179          DB  53D
+0123 36              180          DB  54D
+0124 37              181          DB  55D
+0125 38              182          DB  56D
+0126 39              183          DB  57D
+                     184        
+                     185         END
+                             
+A51 MACRO ASSEMBLER  TACHO_LCD                                                            11/10/2021 18:10:34 PAGE     4
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+ACC. . . . . . . .  D ADDR   00E0H   A   
+ASCII. . . . . . .  C ADDR   011BH   A   
+B. . . . . . . . .  D ADDR   00F0H   A   
+BACK . . . . . . .  C ADDR   0014H   A   
+CMD. . . . . . . .  C ADDR   00ECH   A   
+CONT . . . . . . .  C ADDR   0038H   A   
+DELAY. . . . . . .  C ADDR   0106H   A   
+DINT . . . . . . .  C ADDR   007BH   A   
+DISPLAY. . . . . .  C ADDR   00F9H   A   
+E. . . . . . . . .  B ADDR   00A0H.5 A   
+HERE . . . . . . .  C ADDR   001CH   A   
+LINE2. . . . . . .  C ADDR   00CCH   A   
+LUT. . . . . . . .  C ADDR   011DH   A   
+MAIN . . . . . . .  C ADDR   0007H   A   
+NUM. . . . . . . .  C ADDR   00D1H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+P3 . . . . . . . .  D ADDR   00B0H   A   
+PSW. . . . . . . .  D ADDR   00D0H   A   
+RS . . . . . . . .  B ADDR   00A0H.7 A   
+RW . . . . . . . .  B ADDR   00A0H.6 A   
+SKIP . . . . . . .  C ADDR   0030H   A   
+SKIP1. . . . . . .  C ADDR   0034H   A   
+TEXT1. . . . . . .  C ADDR   0092H   A   
+TEXT2. . . . . . .  C ADDR   00BBH   A   
+TF0. . . . . . . .  B ADDR   0088H.5 A   
+TF1. . . . . . . .  B ADDR   0088H.7 A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TH1. . . . . . . .  D ADDR   008DH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TL1. . . . . . . .  D ADDR   008BH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+TR1. . . . . . . .  B ADDR   0088H.6 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

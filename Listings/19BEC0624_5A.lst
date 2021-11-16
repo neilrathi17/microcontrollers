@@ -1,0 +1,54 @@
+A51 MACRO ASSEMBLER  19BEC0624_5A                                                         11/13/2021 19:03:13 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\19BEC0624_5A.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 19BEC0624_5A.ASM SET(SMALL) DEBUG PRINT(.\Listings\19BEC0624_5A.lst) OB
+                      JECT(.\Objects\19BEC0624_5A.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;Write an 8051Assembly level program to get your serial number as input data from port P0 a
+                             nd send it to port P1 continuously while an interrupt will do the 
+                       2     ;following: Timer 0 will toggle the P2.1 bit every 100 microseconds.
+                       3     
+                       4     ;label  mnemonics       Operands        comments                                
+0000                   5                     ORG             0000H
+0000 020030            6                     LJMP            MAIN           ;Jump to main.
+000B                   7                     ORG             000BH          ; timer 0 Interrupt vector label
+000B B2A1              8                     CPL             P2.1           ; Toggle P2.1 pin
+000D 32                9                     RETI                       ;Return from ISR
+0030                  10                     ORG             0030H          ;After Vector Table Space
+0030 758902           11     MAIN:   MOV             TMOD,#02H      ;set Timer 0 in mode 2
+0033 7580FF           12                     MOV             P0,#0FFH       ; Set P0  an I/P  port
+0036 758C48           13                     MOV             TH0,#-184                
+0039 75A882           14                     MOV             IE,#10000010B  ; enable Timer 0
+003C D28C             15                 SETB                TR0            ; Start the Timer
+003E E580             16     BACK:   MOV             A,P0           ; Get data from P0.
+0040 F590             17                     MOV             P1,A           ; move data P0 to P1
+0042 80FA             18                     SJMP            BACK           ;Loop it Unless interrupted 
+                      19                     END 
+                                 
+A51 MACRO ASSEMBLER  19BEC0624_5A                                                         11/13/2021 19:03:13 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+BACK . . . . . . .  C ADDR   003EH   A   
+IE . . . . . . . .  D ADDR   00A8H   A   
+MAIN . . . . . . .  C ADDR   0030H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

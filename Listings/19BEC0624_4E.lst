@@ -1,0 +1,133 @@
+A51 MACRO ASSEMBLER  19BEC0624_4E                                                         10/16/2021 21:10:38 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\19BEC0624_4E.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 19BEC0624_4E.ASM SET(SMALL) DEBUG PRINT(.\Listings\19BEC0624_4E.lst) OB
+                      JECT(.\Objects\19BEC0624_4E.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;Write a program to send the message “I,<theory slot><theory sl.no.><your name>  assure you
+                              that I will answer all my ALP in tabular column with algorithm ,
+                       2     ;manual calculation and flowchart in CAT II and TERM END EXAM” to the serial port. Assume a
+                              SW is connected to pin P1.2.
+                       3     ;Monitor its status and set the baud rate as follows:
+                       4     ;SW = 0, 4800 baud rate SW = 1, 9600 baud rate Assume XTAL = 11.0592 MHz, 8-bit data, and 1
+                              stop bit.
+                       5     
+                       6     ;label  mnemonics       Operands                comments                        adressing m
+                             ode                  machine cycle   Machine Byte    type of instruction
+  0092                 7                     SW BIT          P1.2
+0000                   8                     ORG             0H                               ;starting position
+0000                   9     MAIN:
+0000 758920           10                     MOV             TMOD,#20H
+0003 758DFA           11                     MOV             TH1,#-6       ;4800 baud rate (default)
+0006 759850           12                     MOV             SCON,#50H
+0009 D28E             13                     SETB            TR1
+000B D292             14                     SETB            SW              ;make SW an input
+000D 309208           15     S1:     JNB             SW,SLOWSP       ;check SW status
+0010 E587             16                     MOV             A,PCON          ;read PCON
+0012 D2E7             17                     SETB            ACC.7           ;set SMOD high for 9600
+0014 F587             18                     MOV             PCON,A          ;write PCON
+0016 8006             19                     SJMP            OVER            ;send message
+0018                  20     SLOWSP:
+0018 E587             21                     MOV             A,PCON          ;read PCON
+001A D2E7             22                     SETB            ACC.7           ;set SMOD low for 4800
+001C F587             23                     MOV             PCON,A          ;write PCON
+001E 900032           24     OVER:   MOV             DPTR,#MESS1     ;load address to message
+0021 E4               25     FN:     CLR             A
+0022 93               26                     MOVC            A,@A+DPTR       ;read value
+0023 60E8             27                     JZ                      S1              ;check for end of line
+0025 112A             28                     ACALL           SENDCOM         ;send value to serial port
+0027 A3               29                     INC             DPTR            ;move to next value
+0028 80F7             30                     SJMP            FN              ;repeat
+                      31     ;------------------------------------------------------------------------------------------
+                             --------------------------
+002A                  32     SENDCOM:
+002A F599             33                     MOV             SBUF,A          ;place value in buffer
+002C 3099FD           34     HERE:   JNB             TI,HERE         ;wait until transmitted
+002F C299             35                     CLR             TI              ;clear
+0031 22               36                     RET                             ;return
+                      37     
+0032 492C3232         38     MESS1:DB "I,22,19BEC0624,NEIL RATHI ,will draw CWF ,interface diagrams ,and calculate delay
+                              or count value for timer ,serial and interrupt programs in ECE3004 LAB and THEORY CAT and FAT Exam"
+0036 2C313942                
+003A 45433036                
+003E 32342C4E                
+0042 45494C20                
+0046 52415448                
+004A 49202C77                
+004E 696C6C20                
+0052 64726177                
+0056 20435746                
+005A 202C696E                
+005E 74657266                
+0062 61636520                
+0066 64696167                
+A51 MACRO ASSEMBLER  19BEC0624_4E                                                         10/16/2021 21:10:38 PAGE     2
+
+006A 72616D73                
+006E 202C616E                
+0072 64206361                
+0076 6C63756C                
+007A 61746520                
+007E 64656C61                
+0082 79206F72                
+0086 20636F75                
+008A 6E742076                
+008E 616C7565                
+0092 20666F72                
+0096 2074696D                
+009A 6572202C                
+009E 73657269                
+00A2 616C2061                
+00A6 6E642069                
+00AA 6E746572                
+00AE 72757074                
+00B2 2070726F                
+00B6 6772616D                
+00BA 7320696E                
+00BE 20454345                
+00C2 33303034                
+00C6 204C4142                
+00CA 20616E64                
+00CE 20544845                
+00D2 4F525920                
+00D6 43415420                
+00DA 616E6420                
+00DE 46415420                
+00E2 4578616D                
+                      39                     END             
+A51 MACRO ASSEMBLER  19BEC0624_4E                                                         10/16/2021 21:10:38 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+ACC. . . . . . . .  D ADDR   00E0H   A   
+FN . . . . . . . .  C ADDR   0021H   A   
+HERE . . . . . . .  C ADDR   002CH   A   
+MAIN . . . . . . .  C ADDR   0000H   A   
+MESS1. . . . . . .  C ADDR   0032H   A   
+OVER . . . . . . .  C ADDR   001EH   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+PCON . . . . . . .  D ADDR   0087H   A   
+S1 . . . . . . . .  C ADDR   000DH   A   
+SBUF . . . . . . .  D ADDR   0099H   A   
+SCON . . . . . . .  D ADDR   0098H   A   
+SENDCOM. . . . . .  C ADDR   002AH   A   
+SLOWSP . . . . . .  C ADDR   0018H   A   
+SW . . . . . . . .  B ADDR   0090H.2 A   
+TH1. . . . . . . .  D ADDR   008DH   A   
+TI . . . . . . . .  B ADDR   0098H.1 A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR1. . . . . . . .  B ADDR   0088H.6 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

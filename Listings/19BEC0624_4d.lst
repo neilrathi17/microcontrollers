@@ -1,0 +1,87 @@
+A51 MACRO ASSEMBLER  19BEC0624_4D                                                         10/05/2021 01:08:27 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\19BEC0624_4d.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 19BEC0624_4d.ASM SET(SMALL) DEBUG PRINT(.\Listings\19BEC0624_4d.lst) OB
+                      JECT(.\Objects\19BEC0624_4d.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;Write an 8051 assembly level program to
+                       2     ;(a) send to PC the message “I<your name><reg. no.> is Ready”, 
+                       3     ;(b) receive your class serial number as data sent by PC and put it on LEDs connected to P1
+                             , and 
+                       4     ;(c) Get the sum of digits of your serial number as data on switches connected to P2 and se
+                             nd it to PC serially.
+                       5     
+                       6     ;label  mnemonics       Operands                comments                        adressing m
+                             ode                  machine cycle   Machine Byte    type of instruction
+0000                   7                     ORG             0
+0000 75A0FF            8                     MOV             P2,#0FFH        ;make P2 an input port
+0003 758920            9                     MOV             TMOD,#20H       ;timer 1, mode 2
+0006 758DF4           10                     MOV             TH1,#-12        ;4800 baud rate
+0009 759850           11                     MOV             SCON,#50H       ;8-bit, 1 stop, REN enabled
+000C D28E             12                     SETB            TR1             ;start timer 1
+000E 900034           13                     MOV             DPTR,#MYDATA;load pointer for message
+0011 E4               14     H_1:    CLR             A
+0012 93               15                     MOVC            A,@A+DPTR       ;get the character
+0013 6005             16                     JZ                      B_1             ;if last character get out
+0015 1124             17                     ACALL           SEND            ;otherwise call transfer
+0017 A3               18                     INC             DPTR            ;next one
+0018 80F7             19                     SJMP            H_1             ;stay in loop
+001A E5A0             20     B_1:    MOV             A,P2            ;read data on P2
+001C 1124             21                     ACALL           SEND            ;transfer it serially
+001E 112C             22                     ACALL           RECV            ;get the serial data
+0020 F590             23                     MOV             P1,A            ;display it on LEDs
+0022 80F6             24                     SJMP            B_1             ;stay in loop indefinitely
+                      25                     ;----serial data transfer. ACC has the data------
+0024 F599             26     SEND:   MOV             SBUF,A          ;load the data
+0026 3099FD           27     H_2:    JNB             TI,H_2          ;stay here until last bit;gone
+0029 C299             28                     CLR             TI                      ;get ready for next char
+002B 22               29                     RET                                     ;return to caller
+                      30                     ;----Receive data serially in ACC----------------
+002C 3098FD           31     RECV:   JNB             RI,RECV         ;wait here for char
+002F E599             32                     MOV             A,SBUF          ;save it in ACC
+0031 C298             33                     CLR             RI                      ;get ready for next char
+0033 22               34                     RET                                     ;return to caller
+                      35                     
+0034 492C3232         36     MYDATA: DB "I,22,19BEC0624,NEIL RATHI am ready."
+0038 2C313942                
+003C 45433036                
+0040 32342C4E                
+0044 45494C20                
+0048 52415448                
+004C 4920616D                
+0050 20726561                
+0054 64792E                  
+                      37                     END
+A51 MACRO ASSEMBLER  19BEC0624_4D                                                         10/05/2021 01:08:27 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B_1. . . . . . . .  C ADDR   001AH   A   
+H_1. . . . . . . .  C ADDR   0011H   A   
+H_2. . . . . . . .  C ADDR   0026H   A   
+MYDATA . . . . . .  C ADDR   0034H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+RECV . . . . . . .  C ADDR   002CH   A   
+RI . . . . . . . .  B ADDR   0098H.0 A   
+SBUF . . . . . . .  D ADDR   0099H   A   
+SCON . . . . . . .  D ADDR   0098H   A   
+SEND . . . . . . .  C ADDR   0024H   A   
+TH1. . . . . . . .  D ADDR   008DH   A   
+TI . . . . . . . .  B ADDR   0098H.1 A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR1. . . . . . . .  B ADDR   0088H.6 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

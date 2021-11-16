@@ -1,0 +1,147 @@
+A51 MACRO ASSEMBLER  TACHO                                                                11/15/2021 10:23:47 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\tacho.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE tacho.ASM SET(SMALL) DEBUG PRINT(.\Listings\tacho.lst) OBJECT(.\Objects
+                      \tacho.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;PROJECT CODE FOR GROUP 7
+                       2     ; Ananya Anil Tirumala , Ishita Kethireddy, Neil Rathi
+                       3     ;label  mnemonics       Operands                                comments        
+0000                   4                       ORG           000H
+0000 900071            5                       MOV           DPTR,#LOOKUP            ; moves the addres of LUT to DPTR  
+                                          
+0003 759000            6                       MOV           P1,#00000000B           ;Sets P1 as an output port
+0006 758000            7                       MOV           P0,#00000000B           ; Sets P0 as an output port
+0009 7E0E              8             MAIN: MOV               R6,#0EH                                 ; set R6 to 14
+000B D2B5              9                       SETB          P3.5                                    ;set reciever port 
+                             for timer1
+000D 758961           10                       MOV           TMOD,#01100001B                 ;Sets Timer1 as Mode2 count
+                             er & Timer0 as Mode1 timer
+0010 758B00           11                       MOV           TL1,#00H                                ;loads initial valu
+                             e to TL1
+0013 758D00           12                       MOV           TH1,#00H                                ;loads initial valu
+                             e to TH1
+0016 D28E             13                       SETB          TR1                             ; starts timer(counter) 1
+0018 758C00           14             BACK: MOV               TH0,#00H                                ;loads initial valu
+                             e to TH0
+001B 758A00           15                       MOV           TL0,#00H                                ;loads initial valu
+                             e to TL0
+001E D28C             16                       SETB          TR0                             ;starts timer 0
+0020 308DFD           17             HERE: JNB               TF0,HERE                        ; checks for Timer 0 roll o
+                             ver
+0023 C28C             18                       CLR           TR0                             ; stops Timer0
+0025 C28D             19                       CLR           TF0                             ; clears Timer Flag 0
+0027 DEEF             20                       DJNZ          R6,BACK                                 ;repeat timer 0 to 
+                             FFFFH 14 times for 1 second
+0029 C28E             21                       CLR           TR1                             ; stops Timer(counter)1
+002B C28D             22                       CLR           TF0                             ; clears Timer Flag 0
+002D C28F             23                       CLR           TF1                             ; clears Timer Flag 1
+002F 1133             24                       ACALL         DLOOP                           ; Calls subroutine DLOOP fo
+                             r displaying the count
+0031 80D6             25                       SJMP          MAIN                            ; jumps back to the main lo
+                             op
+0033 7D64             26             DLOOP: MOV              R5,#64H                                 ;repeat 100 times
+0035 E58B             27             BACK1: MOV              A,TL1                           ; loads the current count t
+                             o the accumulator
+0037 75F064           28                        MOV          B,#100D                                 ; move 100 to B to 
+                             divide A by
+003A 84               29                        DIV          AB                              ; isolates the first digit 
+                             of the count
+003B D290             30                        SETB         P1.0                                    ;set p1.0 to high t
+                             o trigger first display
+003D 116F             31                        ACALL        DISPLAY                         ; converts the 1st digit to
+                              7 seg pattern
+003F F580             32                        MOV          P0,A                            ; puts the pattern to Port 0
+0041 116A             33                        ACALL        DELAY                           ; 1mS delay
+0043 116A             34                        ACALL        DELAY                                   
+0045 E5F0             35                        MOV          A,B                                             ;move remai
+                             nder to A to extract second digit
+0047 75F00A           36                        MOV          B,#10D                                  ;divide A by 10 to 
+                             get second digit
+004A 84               37                        DIV          AB                              ;isolates the secong digit 
+                             of the count
+004B C290             38                        CLR          P1.0                                    ;remove p1.0 trigger
+A51 MACRO ASSEMBLER  TACHO                                                                11/15/2021 10:23:47 PAGE     2
+
+004D D291             39                        SETB         P1.1                                    ;trigger p1.1 trigg
+                             er
+004F 116F             40                        ACALL        DISPLAY                         ;converts the 2nd digit to 
+                             7 seg pattern
+0051 F580             41                        MOV          P0,A                                    ;send second digit 
+                             to port 0
+0053 116A             42                        ACALL        DELAY                                   ;0.5ms delay
+0055 116A             43                        ACALL        DELAY                                   ;0.5ms delay
+0057 E5F0             44                        MOV          A,B                             ; moves the last digit of t
+                             he count to accumulator
+0059 C291             45                        CLR          P1.1                                    ;remove trigger fro
+                             m p1.1
+005B D292             46                        SETB         P1.2                                    ;trigger p1.2 for t
+                             hird digit
+005D 116F             47                        ACALL        DISPLAY                         ; converts the 3rd digit to
+                              7 seg pattern
+005F F580             48                        MOV          P0,A                                    ;move third digit t
+                             o p0
+0061 116A             49                        ACALL        DELAY                                   ;0.5ms delay
+0063 116A             50                        ACALL        DELAY                                   ;0.5ms delay
+0065 C292             51                        CLR          P1.2                                    ;clear p1.2 trigger
+0067 DDCC             52                        DJNZ         R5,BACK1                        ; repeats the subroutine DL
+                             OOP 100 times
+0069 22               53                        RET                                                          ;return to 
+                             calling function
+                      54     
+006A 7FFA             55     DELAY:     MOV          R7,#0FAH                        ; 1mS delay
+006C DFFE             56      DEL1:     DJNZ         R7,DEL1
+006E 22               57                RET
+                      58     
+006F 93               59     DISPLAY:   MOVC         A,@A+DPTR                       ; gets 7 seg digit drive pattern fo
+                             r current value in A
+                      60                                                                             
+0070 22               61                RET
+0071                  62     LOOkUP:          ;DB 0C0H,0F9H,0A4H,0B0H,99H,92H,82H,0F8H,80H,90H                       ;en
+                             glish lookup table
+0071 40792430         63                              DB 40H,79H,24H,30H,19H,12H,20H,78H,00H,10H
+0075 19122078                
+0079 0010                    
+                      64                             ;DB 0C0H,098H,0A4H,0B0H,081H,091H,086H,083H,0c3H,84H            ; h
+                             indi lookup table
+                      65                             END
+A51 MACRO ASSEMBLER  TACHO                                                                11/15/2021 10:23:47 PAGE     3
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+BACK . . . . . . .  C ADDR   0018H   A   
+BACK1. . . . . . .  C ADDR   0035H   A   
+DEL1 . . . . . . .  C ADDR   006CH   A   
+DELAY. . . . . . .  C ADDR   006AH   A   
+DISPLAY. . . . . .  C ADDR   006FH   A   
+DLOOP. . . . . . .  C ADDR   0033H   A   
+HERE . . . . . . .  C ADDR   0020H   A   
+LOOKUP . . . . . .  C ADDR   0071H   A   
+MAIN . . . . . . .  C ADDR   0009H   A   
+P0 . . . . . . . .  D ADDR   0080H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P3 . . . . . . . .  D ADDR   00B0H   A   
+TF0. . . . . . . .  B ADDR   0088H.5 A   
+TF1. . . . . . . .  B ADDR   0088H.7 A   
+TH0. . . . . . . .  D ADDR   008CH   A   
+TH1. . . . . . . .  D ADDR   008DH   A   
+TL0. . . . . . . .  D ADDR   008AH   A   
+TL1. . . . . . . .  D ADDR   008BH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR0. . . . . . . .  B ADDR   0088H.4 A   
+TR1. . . . . . . .  B ADDR   0088H.6 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

@@ -1,0 +1,66 @@
+A51 MACRO ASSEMBLER  TASK3_VIVA4                                                          09/30/2021 00:22:26 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\task3-viva4.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE task3-viva4.ASM SET(SMALL) DEBUG PRINT(.\Listings\task3-viva4.lst) OBJE
+                      CT(.\Objects\task3-viva4.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;Assume there are ten bytes of data stored in External RAM starting from 2000H onwards. Wri
+                             te an 8051 ALP with comments which checks the data bytes are 
+                       2     ;odd/even. If the data byte is odd then store the same starting from 30H address location o
+                             f internal RAM else store the data byte starting from 50H in
+                       3     ;the internal RAM. 
+                       4     ;label  mnemonics       Operands                comments                                   
+                                                  adressing mode                  machine cycle           memory byte             type of instruction
+0000                   5                     ORG                     000H                    ;assembler directive
+0000 902000            6                     MOV             DPTR,#2000H             ;set DPTR to data location
+0003 7B0A              7                     MOV                     R3,#0AH                 ;R0 count is 10
+0005 7930              8                     MOV                     R1,#30H                 ;pointer for odd data
+0007 7850              9                     MOV             R0,#50H                 ;pointer for even data
+0009 E4               10     LOOP:   CLR                     A                               ;clear accumulator
+000A 93               11                     MOVC            A,@A+DPTR               ;get data from code memory
+000B 75F002           12                     MOV                     B,#02H                  ;for division
+000E FC               13                     MOV                     R4,A                    ;store the data temporarily
+000F 84               14                     DIV                     AB                              ;divide A and B
+0010 AAF0             15                     MOV             R2,B                    ;move the remainder
+0012 EC               16                     MOV             A,R4                    ;move data back to accumulator
+0013 BA0005           17                     CJNE            R2,#00H,ODD             ;check for remainder =1
+0016 F6               18                     MOV                     @R0,A                   ;Move odd data to 30H
+0017 08               19                     INC                     R0                              ;increase pointer
+0018 A3               20                     INC                     DPTR                    ;increase source pointer
+0019 DBEE             21                     DJNZ            R3,LOOP                 ;loop back
+001B F7               22     ODD:    MOV                     @R1,A                   ;Move odd data to 30H
+001C 09               23                     INC                     R1                              ;increase pointer
+001D A3               24                     INC                     DPTR                    ;increase source pointer
+001E DBE9             25                     DJNZ            R3,LOOP                 ;loop back
+0020 80FE             26     HERE:   SJMP            HERE                    ;end ALP
+                      27     ;------------------------------------------------------------------------------------------
+2000                  28                     ORG                     2000H
+2000 0001090B         29                     DB                      00H,01H,09H,0BH,0EH,0CH,00H,06H,02H,04H
+2004 0E0C0006                
+2008 0204                    
+                      30                     END
+                                             
+                                             
+                                             
+A51 MACRO ASSEMBLER  TASK3_VIVA4                                                          09/30/2021 00:22:26 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+B. . . . . . . . .  D ADDR   00F0H   A   
+HERE . . . . . . .  C ADDR   0020H   A   
+LOOP . . . . . . .  C ADDR   0009H   A   
+ODD. . . . . . . .  C ADDR   001BH   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

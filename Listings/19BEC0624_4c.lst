@@ -1,0 +1,57 @@
+A51 MACRO ASSEMBLER  19BEC0624_4C                                                         10/05/2021 00:39:46 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\19BEC0624_4c.obj
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE 19BEC0624_4c.ASM SET(SMALL) DEBUG PRINT(.\Listings\19BEC0624_4c.lst) OB
+                      JECT(.\Objects\19BEC0624_4c.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+                       1     ;Assume 8051 is connected to the PC and observe the incoming characters. As you press a key
+                              representing the last numerical value of your registration 
+                       2     ;number on the PC's keyboard, the character is sent to the 8051 serially at 4800 baud rate 
+                             and is displayed on LEDs. The characters displayed on LEDs are
+                       3     ;in ASCII (binary). Assume that the 8051 serial port is connected to the COM port of IBM PC
+                             ,  P1 and P2 of the 8051 are connected to LEDs and switches, 
+                       4     ;respectively.
+                       5     
+                       6     ;label  mnemonics       Operands                comments                        
+                       7     
+0000                   8                     ORG         0000H        
+0000 75A0FF            9                     MOV         P2,#0FFH        ;set P2 as input
+0003 758920           10             MOV         TMOD,#20H           ;timer 1 in mode 2
+0006 758DF4           11                     MOV         TH1,#-12    ;4800 baud rate    
+0009 759850           12                     MOV         SCON,#50H      ; set SCOn  
+000C D28E             13                     SETB        TR1            ;start timer 1
+000E E5A0             14     CONTINUE:MOV        A ,P2          ;serial data transfer.
+0010 3098FD           15     H_2:    JNB         RI,H_2         ;stay here until last bit
+0013 F599             16             MOV         SBUF,A         ;load the data
+0015 C298             17                     CLR         RI             ;get ready for next char
+0017 F590             18             MOV         P1,A                ;move data from acc to P1
+0019 80F3             19                     SJMP            CONTINUE
+                      20             END
+A51 MACRO ASSEMBLER  19BEC0624_4C                                                         10/05/2021 00:39:46 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+CONTINUE . . . . .  C ADDR   000EH   A   
+H_2. . . . . . . .  C ADDR   0010H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+P2 . . . . . . . .  D ADDR   00A0H   A   
+RI . . . . . . . .  B ADDR   0098H.0 A   
+SBUF . . . . . . .  D ADDR   0099H   A   
+SCON . . . . . . .  D ADDR   0098H   A   
+TH1. . . . . . . .  D ADDR   008DH   A   
+TMOD . . . . . . .  D ADDR   0089H   A   
+TR1. . . . . . . .  B ADDR   0088H.6 A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)
